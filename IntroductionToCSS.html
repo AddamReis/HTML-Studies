@@ -1,0 +1,39 @@
+<html>
+
+    <!-- CSS
+    h1 --aplica css pela TAG
+    .fun -aplica css pela CLASSE 
+    #tex --aplica css pelo ID
+
+    Pode ter mais um css definido para classes
+    -->
+
+    <!-- JS
+        para pesquisar por atributos, é utilizado da forma abaixo no navegador
+        document.querySelector('[wm-atrib]') --atributos devem ser passados entre chaves []
+    -->
+
+    <head>
+        <title>Um Pouco de CSS</title>
+        <link rel="stylesheet" href="IntroductionToCSS.css">
+        <style>
+            h1 {
+                font-size: 20px;
+            } 
+
+            .fundoVermelho {
+                background-color: #C00;
+            }
+
+            .negrito {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>CSS</h1>
+        <span id="textoPrincipal">Texto 1</span><br><br><br>
+        <span class="fundoVermelho negrito">Texto 2</span><br><br>
+        <span class="fundoVermelho" wm-atrib>Texto 3</span>
+    </body>
+</html>
