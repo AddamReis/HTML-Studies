@@ -2,3 +2,49 @@
     <source src="http://files.cod3r.com.br/curso-web/video.mp4" type="video/mp4"> <!--É utilizado para colocar diversos formatos de vídeo, caso o browser não suporte, chama o próximo, e assim por diante-->
     Seu browser não suporta a tag de vídeo.
 </video>
+
+<div wm-progresso="meuVideo" class="progresso"> <!--renderiza o progresso como um todo-->
+    <div></div> <!--Preenche com alguma cor a barra de fora-->
+</div>
+
+<div>
+    <button wm-play="meuVideo">Play</button>
+    <button wm-pause="meuVideo">Pause</button>
+</div>
+
+<style>
+    .progresso {
+        height: 20px;
+        width: 500px;
+        border: solid 1px #444;
+        margin: 20px;
+    }
+
+    .progresso > div {
+        background-color: red;
+        color: #fff;
+        height: 100%;
+        text-align: right;
+        font-size: 14px;
+        width: 0%;
+    }
+</style>
+
+<script>
+    function configurarVideo(id) {
+        const video = document.getElementById(id)
+        video.oncontextmenu = () => false //não permite o usuário acessar as propriedades do vídeo a partir do botão direito
+
+        document.querySelector(`[wm-play=${id}]`).onclick = e => video.play() //dar play no vídeo passado pelo ID
+        document.querySelector(`[wm-pause=${id}]`).onclick = e => video.pause() //pausar vídeo passado pelo ID
+
+        setInterval(() => {
+            const percentual = (video.currentTime / video.duration) * 100 //percentual do progresso do vídeo até o momento
+            const valorDiv = document.querySelector(`[wm-progresso=${id}] > div`)
+            valorDiv.style.width = `${percentual}%` //colori a barra de percentual
+            valorDiv.innerHTML = `${percentual.toFixed(1)}%` //mostra o percentual
+        }, 300) //atualiza a cada 300 mls
+    }
+
+    configurarVideo('meuVideo')
+</script>
