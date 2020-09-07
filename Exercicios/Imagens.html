@@ -41,12 +41,15 @@
 
 
 <style>
-.circular {
+    p {
+        position: absolute;
+        display: none; /*deixa o conteúdo invisível*/
+    }
+
+    .circular {
         width: 513px;
         background-color: #444;
     }
-
-
 
     .texto {
         width: 400px;
@@ -65,3 +68,48 @@
         background-size: 200%;
     }
 </style>
+
+<script>
+    function mover(elem, inicio, fim, passo, callback) {
+        const novoInicio = inicio - passo
+        if(novoInicio >= fim) {
+            elem.style.left = novoInicio + 'px'
+            setTimeout(() => mover(elem, novoInicio, fim, passo, callback), 7)
+        } else {
+            callback()
+        }
+    }
+
+    // const p = document.querySelector('[wm-slider] > p')
+    // p.style.display = 'block'
+    // mover(p, 1500, -520, 5, () => {
+    //     console.log('Terminou!!!')
+    // })
+
+    function slider() {
+        const elementos = document.querySelectorAll('[wm-slider] > p') /*pega todos elementos p que contenham dentro de wm-slider*/
+        const slides = Array.from(elementos) //converte os elementos em array
+        exibirSlide(slides, slides[0])
+    }
+
+    function exibirSlide(slides, slide) { /*Recebe a lista de slide e o slide de índice 0*/
+        slide.style.display = 'block' /*slide fica visível*/
+
+        const inicio = innerWidth //pega a largura da tela atual //ou 2000px
+        const fim = -slide.clientWidth //final da largura da pagina //ou -530px
+
+        slide.style.left = `${inicio}px` //movimento se inicia a partir deste ponto
+
+        mover(slide, inicio, fim, 5, () => { //recursividade
+            slide.style.display = 'none' //o slide que estava visível fica invisivel
+            exibirSlide(slides, getProximo(slides, slide))
+        })
+    }
+
+    function getProximo(lista, atual) {
+        const i = lista.indexOf(atual) + 1 //retorna o proximo slide
+        return i < lista.length ? lista[i] : lista[0] //se o próximo elemento não existir, retorna o elemento de índice [0]
+    }
+
+    slider()
+</script>
